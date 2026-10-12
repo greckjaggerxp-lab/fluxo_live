@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plan Live — App de pedidos</title>
+<meta name="description" content="App de pedidos para quienes venden en vivo. Catálogo con carrito que envía el pedido a WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#111111;
+    --ink-2:#3a3a3a;
+    --mute:#7a7a7a;
+    --line:#e3e3e3;
+    --soft:#f5f5f4;
+    --paper:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px}
+  section{padding:56px 0;border-top:1px solid var(--line)}
+  .label{
+    font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);
+    margin-bottom:20px;
+  }
+  h2{font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.2;margin-bottom:28px}
+  .sub{font-size:15px;color:var(--ink-2);margin:-16px 0 24px}
+
+  /* Cabecera */
+  header{padding:28px 0 24px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+  .who strong{display:block;font-size:15px;font-weight:600;letter-spacing:-.01em}
+  .who span{display:block;font-size:13px;color:var(--mute);margin-top:2px}
+  .doc{font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;padding-top:3px}
+
+  /* Hero */
+  .hero{padding:40px 0 64px;border-top:1px solid var(--ink)}
+  .eyebrow{
+    display:inline-block;font-size:11px;font-weight:600;letter-spacing:.2em;
+    border:1px solid var(--ink);padding:6px 12px;margin-bottom:28px;
+  }
+  .hero h1{font-size:42px;font-weight:600;letter-spacing:-.035em;line-height:1.05;max-width:13ch}
+  .hero p.lead{font-size:18px;color:var(--ink-2);margin-top:20px;max-width:34ch}
+  .hero p.note{font-size:13px;color:var(--mute);margin-top:12px}
+  .hero-grid{display:grid;gap:48px;align-items:center}
+
+  /* Teléfono */
+  .phone{width:260px;margin:0 auto;border:1px solid var(--ink);border-radius:34px;padding:10px;background:var(--paper)}
+  .screen{border:1px solid var(--line);border-radius:26px;overflow:hidden;background:var(--paper)}
+  .bar{font-size:10px;color:var(--mute);text-align:center;padding:10px 0 8px;border-bottom:1px solid var(--line);letter-spacing:.02em}
+  .store{padding:14px 14px 0}
+  .store .brand{font-size:12px;font-weight:700;letter-spacing:.22em;text-align:center;margin-bottom:12px}
+  .chips{display:flex;gap:6px;margin-bottom:12px;overflow:hidden}
+  .chips i{font-style:normal;font-size:9px;border:1px solid var(--line);border-radius:20px;padding:3px 9px;color:var(--ink-2)}
+  .chips i:first-child{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .item .ph{aspect-ratio:1/1;background:var(--soft);border-radius:8px;position:relative}
+  .item .ph.out::after{
+    content:"AGOTADO";position:absolute;right:6px;bottom:6px;font-size:7px;font-weight:600;letter-spacing:.1em;
+    background:#fff;border:1px solid var(--ink);padding:2px 5px;
+  }
+  .item b{display:block;height:6px;width:70%;background:#d6d6d6;border-radius:3px;margin:8px 0 5px}
+  .item s{display:block;text-decoration:none;font-size:9px;font-weight:600}
+  .cart{
+    margin:14px -14px 0;background:var(--ink);color:#fff;font-size:10px;font-weight:500;
+    display:flex;justify-content:space-between;padding:12px 14px;letter-spacing:.02em;
+  }
+  .seal{margin-top:18px;text-align:center;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+  .seal b{color:var(--ink);font-weight:700}
+
+  /* Pasos */
+  .steps{border-top:1px solid var(--ink)}
+  .step{display:grid;grid-template-columns:56px 1fr;gap:12px;padding:20px 0;border-bottom:1px solid var(--line)}
+  .step .n{font-size:13px;font-weight:600;color:var(--mute);padding-top:2px}
+  .step h3{font-size:17px;font-weight:600;letter-spacing:-.01em}
+  .step p{font-size:14px;color:var(--mute);margin-top:2px}
+  .closing{margin-top:24px;font-size:15px;color:var(--ink-2)}
+
+  /* Listas con ícono */
+  .incl{display:grid;grid-template-columns:1fr;border-top:1px solid var(--ink)}
+  .incl li{
+    list-style:none;display:grid;grid-template-columns:28px 1fr;gap:14px;align-items:start;
+    padding:18px 0;border-bottom:1px solid var(--line);
+  }
+  .incl svg{width:20px;height:20px;stroke:var(--ink);stroke-width:1.4;fill:none;margin-top:2px;stroke-linecap:round;stroke-linejoin:round}
+  .incl strong{display:block;font-size:15px;font-weight:600}
+  .incl span{display:block;font-size:13px;color:var(--mute);margin-top:2px}
+
+  /* Tecnología: fondo suave para distinguir producto de servicio */
+  .tech{background:var(--soft);margin:0 -20px;padding-left:20px;padding-right:20px;border-top:none}
+  .tech .incl li{border-bottom-color:#dcdcda}
+
+  /* Inversión */
+  .price{border:1px solid var(--ink);padding:32px 24px}
+  .price .amount{font-size:64px;font-weight:600;letter-spacing:-.045em;line-height:1}
+  .price .amount small{font-size:22px;font-weight:500;letter-spacing:-.01em;margin-right:6px;vertical-align:.95em}
+  .price .terms{font-size:15px;color:var(--ink-2);margin-top:12px}
+  .split{display:grid;grid-template-columns:1fr 1fr;margin-top:28px;border-top:1px solid var(--line)}
+  .split div{padding:18px 0 0}
+  .split div + div{border-left:1px solid var(--line);padding-left:20px}
+  .split .k{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+  .split .v{font-size:24px;font-weight:600;letter-spacing:-.02em;margin-top:6px}
+  .split .w{font-size:13px;color:var(--mute);margin-top:2px}
+  .pay{font-size:13px;color:var(--mute);margin-top:16px}
+
+  /* Entrega */
+  .checks{border-top:1px solid var(--ink)}
+  .checks li{
+    list-style:none;display:grid;grid-template-columns:28px 1fr;gap:14px;padding:16px 0;
+    border-bottom:1px solid var(--line);font-size:15px;
+  }
+  .box{width:18px;height:18px;border:1px solid var(--ink);display:grid;place-items:center;margin-top:3px}
+  .box svg{width:12px;height:12px;stroke:var(--ink);stroke-width:2;fill:none}
+  .fine{font-size:13px;color:var(--mute);margin-top:20px;max-width:56ch}
+
+  /* Desde el segundo año */
+  .after{border-top:1px solid var(--ink)}
+  .after li{list-style:none;display:grid;grid-template-columns:1fr;gap:2px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .after .k{font-size:14px;font-weight:600}
+  .after .v{font-size:14px;color:var(--ink-2)}
+  .after .v em{font-style:normal;color:var(--mute)}
+
+  /* Pie */
+  footer{border-top:1px solid var(--ink);padding:28px 0 48px;display:flex;justify-content:space-between;align-items:center;gap:12px 16px;flex-wrap:wrap}
+  footer p{font-size:12px;color:var(--mute)}
+  footer p b{color:var(--ink);font-weight:600}
+  footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+  .powered{letter-spacing:.14em;text-transform:uppercase;font-size:10px}
+  .powered b{letter-spacing:.2em;font-weight:700}
+
+  @media (min-width:720px){
+    .hero h1{font-size:58px}
+    .hero-grid{grid-template-columns:1.2fr 1fr}
+    .phone{margin:0 0 0 auto}
+    .incl{grid-template-columns:1fr 1fr;column-gap:40px}
+    .price{padding:44px 40px}
+    .price .amount{font-size:80px}
+    .after li{grid-template-columns:200px 1fr;gap:20px}
+    section{padding:72px 0}
+    .tech{margin:0 -40px;padding-left:40px;padding-right:40px}
+  }
+  @media print{section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="who">
+      <strong>Danilo Pastor Rosales</strong>
+      <span>Founder · Analista y Estratega Comercial</span>
+    </div>
+    <div class="doc">Plan Live</div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">APP + SOFTWARE</div>
+        <h1>App de pedidos para quienes venden en vivo</h1>
+        <p class="lead">Tu catálogo con carrito. El pedido te llega listo a WhatsApp.</p>
+        <p class="note">Se abre desde un link. Sin descargas.</p>
+      </div>
+      <div>
+        <div class="phone" aria-hidden="true">
+          <div class="screen">
+            <div class="bar">tumarca.fluxo.ink</div>
+            <div class="store">
+              <div class="brand">TU MARCA</div>
+              <div class="chips"><i>Todo</i><i>Nuevos</i><i>Ofertas</i></div>
+              <div class="grid">
+                <div class="item"><div class="ph"></div><b></b><s>S/ 45</s></div>
+                <div class="item"><div class="ph"></div><b></b><s>S/ 60</s></div>
+                <div class="item"><div class="ph out"></div><b></b><s>S/ 38</s></div>
+                <div class="item"><div class="ph"></div><b></b><s>S/ 52</s></div>
+              </div>
+              <div class="cart"><span>Pedido · 3 productos</span><span>Enviar a WhatsApp →</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="seal">Tecnología <b>FLUXO</b></p>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="label">Cómo funciona</div>
+    <h2>Pensada para vender después del live</h2>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><div><h3>Terminas tu live</h3><p>Tus productos ya están en el catálogo.</p></div></div>
+      <div class="step"><div class="n">02</div><div><h3>Fijas el link</h3><p>En comentarios y en tu bio.</p></div></div>
+      <div class="step"><div class="n">03</div><div><h3>El pedido te llega a WhatsApp</h3><p>Ordenado: productos, cantidades y total.</p></div></div>
+    </div>
+    <p class="closing">Ya no respondes uno por uno a “¿qué tienes?”.</p>
+  </section>
+
+  <section>
+    <div class="label">Qué incluye</div>
+    <h2>Todo listo para recibir pedidos</h2>
+    <ul class="incl">
+      <li>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg>
+        <div><strong>Tienda publicada</strong><span>En tu enlace propio: tumarca.fluxo.ink</span></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5"/><rect x="13.5" y="3" width="7.5" height="7.5"/><rect x="3" y="13.5" width="7.5" height="7.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5"/></svg>
+        <div><strong>Carga inicial de 15 productos</strong><span>Los subimos con tus fotos y precios. Desde ahí cargas los que quieras tú mismo, sin límite.</span></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M3 4h2.5l2.2 11h11l2-8H6.6"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>
+        <div><strong>Carrito con envío a WhatsApp</strong><span>El cliente arma su pedido y te lo manda completo.</span></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2"/><path d="M10.5 18.5h3"/></svg>
+        <div><strong>Agotados desde tu celular</strong><span>Actualizas el stock en segundos.</span></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <div><strong>1 hora de asesoría en vivo</strong><span>Para que manejes la tienda tú mismo.</span></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.5-3.2 8.2-7.5 9.5-4.3-1.3-7.5-5-7.5-9.5V6z"/><path d="M8.8 12l2.2 2.2 4.2-4.4"/></svg>
+        <div><strong>Primer año incluido</strong><span>Hosting, soporte y mejoras.</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="tech">
+    <div class="label">Tecnología</div>
+    <h2>Hecha para vender, desde cualquier pantalla</h2>
+    <ul class="incl">
+      <li>
+        <svg viewBox="0 0 24 24"><rect x="2.5" y="4" width="14" height="10" rx="1"/><path d="M6 17.5h7"/><rect x="16" y="9" width="5.5" height="11" rx="1"/></svg>
+        <div><strong>Celular y computadora</strong><span>Tu tienda se ve bien en cualquier pantalla.</span></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+        <div><strong>Administras desde donde estés</strong><span>Gestiona productos y precios desde el celular o la computadora.</span></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M13 2.5L5 13.5h6l-1 8 8-11h-6z"/></svg>
+        <div><strong>Carga rápida</strong><span>Fotos optimizadas: abre rápido incluso con datos móviles.</span></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
+        <div><strong>Link con tu logo</strong><span>Al compartirlo en WhatsApp aparece tu logo y la descripción de tu tienda.</span></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 16L16 8"/><circle cx="9" cy="9" r="1.2"/><circle cx="15" cy="15" r="1.2"/></svg>
+        <div><strong>Sin comisión por venta</strong><span>Tus ventas son 100% tuyas.</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="label">Inversión</div>
+    <div class="price">
+      <div class="amount"><small>S/</small>690</div>
+      <p class="terms">Pago único. Incluye el primer año con hosting.</p>
+      <div class="split">
+        <div><div class="k">Al iniciar</div><div class="v">S/ 345</div><div class="w">50% para la instalación</div></div>
+        <div><div class="k">Al entregar</div><div class="v">S/ 345</div><div class="w">50% al cerrar la sesión</div></div>
+      </div>
+    </div>
+    <p class="pay">Yape, Plin o transferencia.</p>
+  </section>
+
+  <section>
+    <div class="label">Entrega</div>
+    <h2>Lista en 2 a 3 días hábiles</h2>
+    <p class="sub">Desde que recibo tu material. Tu app está terminada cuando:</p>
+    <ul class="checks">
+      <li><div class="box"><svg viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5"/></svg></div>La tienda está publicada en tu enlace.</li>
+      <li><div class="box"><svg viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5"/></svg></div>Los primeros 15 productos están cargados.</li>
+      <li><div class="box"><svg viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5"/></svg></div>En la sesión cargas 2 o 3 productos tú mismo, con guía.</li>
+      <li><div class="box"><svg viewBox="0 0 12 12"><path d="M2.5 6.2l2.3 2.3 4.7-5"/></svg></div>Hacemos un pedido de prueba y llega a tu WhatsApp.</li>
+    </ul>
+    <p class="fine">Si el material no llega en 7 días desde el primer pago, se entrega con lo cargado hasta ese momento.</p>
+  </section>
+
+  <section>
+    <div class="label">Desde el segundo año</div>
+    <ul class="after">
+      <li><span class="k">Renovación</span><span class="v">S/ 100 al año, menos de S/ 9 al mes. <em>Incluye hosting, soporte y mejoras.</em></span></li>
+      <li><span class="k">Sin renovación</span><span class="v">La tienda se pausa y se reactiva al renovar.</span></li>
+      <li><span class="k">Dominio propio</span><span class="v">Opcional. Aprox. US$ 10 a 15 al año, a tu nombre.</span></li>
+      <li><span class="k">A medida</span><span class="v">Lo que vaya más allá del catálogo de pedidos se conversa y se cotiza aparte.</span></li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Desarrollado por <b>Danilo Pastor Rosales</b> · WhatsApp <a href="https://wa.me/51951908602">951 908 602</a></p>
+    <p class="powered">Funciona con <b>FLUXO</b></p>
+  </footer>
+
+</div>
+</body>
+</html>
